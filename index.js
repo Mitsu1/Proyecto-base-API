@@ -19,8 +19,8 @@ App.use(Express.json())
 
 App.use((req, res, next) => {
 
-    res.$data = data => Responses.$data(data,res)
-    res.$error = error => Responses.$data(error,res)
+    res.$data = data => Responses.$data(data, res)
+    res.$error = error => Responses.$data(error, res)
     next()
 
 })
@@ -29,14 +29,12 @@ App.use(Router)
 App.use(Middlewares.notFound)
 App.use(Middlewares.serverError)
 
-Database()
-    
+Database()    
     .then(() => {
         App.listen(Config.port, () => {
             console.log(`[APP] ${Config.host}:${Config.port}`)
         })
     })
-
     .catch(error => {
         console.log(error)    
         process.exit(0)

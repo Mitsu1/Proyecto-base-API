@@ -1,27 +1,25 @@
-module.expors = {    
+module.exports = {    
     $data,
     $error    
 }
 
 async function $data(data, res) {
-
     res.status(200).send({
-        sucess:true,
+        success:true,
         data
     })
-
 }
 
 async function $error(error, res) {
 
-    if (error.stack)
+    if(error.stack)
         console.log(error.stack)
         
     else
         console.log(error)
 
     res.status(error.code).send({
-        sucess:true,
+        success: false,
         error
     })
 

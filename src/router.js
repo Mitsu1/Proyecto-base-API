@@ -1,7 +1,6 @@
 const Router = require('express').Router()
 
 Router.get('/', async(req, res) => {
-
     res.send({
         sucess: true,
         data: {
@@ -10,6 +9,9 @@ Router.get('/', async(req, res) => {
     })
 })
 
+const UsersRouter = require('./users/users.router')
+
 module.exports = [
-    Router
+    Router,
+    UsersRouter
 ]
