@@ -31,7 +31,8 @@ async function getUsers(query) {
         if(query.find) {
             const regexp = new RegExp(query.find, 'i')
             options.$or = [
-                { name: regexp },
+                { firstName: regexp },
+                { lastName: regexp },
                 { phone: regexp },
                 { email: regexp },
             ]
@@ -41,9 +42,9 @@ async function getUsers(query) {
             options.status = query.status
 
         const users = await Model.find(options)
-        .skip(limit * page)
-        .limit(limit)
-        .sort({created: -1})
+            .skip(limit * page)
+            .limit(limit)
+            .sort({created: -1})
 
         const total = await Model.countDocuments(options)
                 
@@ -54,23 +55,6 @@ async function getUsers(query) {
         }
 
     } catch (error) {
-        throw error
-    }
-}
-
-async function updateUser(userId, data) {
-    try {
-
-        const user = await getUser(userId)   
-
-        user.firstName = data.firstName
-        user.lastName = data.lastName
-        user.phone = data.phone
-        user.email = data.email
-
-        return user.save()
-
-    } catch(error) {
         throw error
     }
 }
@@ -86,6 +70,22 @@ async function getUser(userId) {
         return user
 
     } catch (error) {
+        throw error
+    }
+}
+
+async function updateUser(userId, data) {
+    try {
+
+        const user = await getUser(userId)   
+
+        const fields = Object.keys(data)
+
+        fields.forEach(field => user[field] = data[field])
+
+        return user.save()
+
+    } catch(error) {
         throw error
     }
 }

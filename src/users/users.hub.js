@@ -1,4 +1,5 @@
 const Service = require('./users.service')
+const Fields = require('./users.fields')
 
 module.exports = {
     createUser,
@@ -9,12 +10,14 @@ module.exports = {
 
 async function createUser(req, res) {
     try {
+
+        const fields = new Fields(req)
         
         const data = {
-            firstName: req.body.firstName,
-            lastName: req.body.lastName,
-            email: req.body.email,
-            phone: req.body.phone,
+            firstName: fields.firstName.get(),
+            lastName: fields.lastName.get(),
+            email: fields.email.get(),
+            phone: fields.phone.get(),
         }
 
         res.$data(await Service.createUser(data))
@@ -45,18 +48,21 @@ async function updateUser(req, res) {
         
         const data = {
             userId: req.params.userId,
-            firstName: req.body.firstName,
-            lastName: req.body.lastName,
-            email: req.body.email,
-            phone: req.body.phone,
         }
 
+        const fields = [
+            'firstName',
+            'lastName',
+            'phone',
+        ]
+
+        fields.forEach(field => req.body[field] && (data[field] = req.body[field]))
+        
         res.$data(await Service.updateUser(data.userId, data))
 
     } catch (error) {
         res.$error(error)
-    }
-    
+    }    
 }
 
 async function deleteUser(req, res) {

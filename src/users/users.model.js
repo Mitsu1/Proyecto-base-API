@@ -11,6 +11,10 @@ const schema = new Schema ({
         default: 'enabled'
     },
 
+    name: {
+        type: String
+    },
+
     firstName: {
         type: String
     },
@@ -26,18 +30,24 @@ const schema = new Schema ({
     phone: {
         type: String
     },
-
+    
+    updated: {
+        type: Date
+    },
+    
     created: {
         type: Date,
         default: Date.now
     }
+        
 })
 
-schema.pre('save', function(next) {
-    
-    this.name = `${ this.firstName } ${ this.lastNam}`
+schema.pre('save', function(next) {    
+    this.name = `${ this.firstName } ${ this.lastName}`
+    this.updated = new Date()
     next()
 })
+
 schema.post('save', function(error, doc, next) {
     if(error) return next( Messages(error).userSaveError )
     next()
@@ -53,8 +63,9 @@ schema.post('find', function(error, doc, next) {
     next()
 })
 
-schema.post('find', function(error, doc, next) {
+schema.post('remove', function(error, doc, next) {
     if(error) return next( Messages(error).userDeleteError )
     next()
 })
+
 module.exports = Model('Users', schema)

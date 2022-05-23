@@ -10,6 +10,31 @@ const Fields = function(req) {
         name: 'identificador'
     })
 
+    this.firstName = validator({
+        type: 'string',
+        value: props.firstName,
+        name: 'nombre'
+    })
+
+    this.lastName = validator({
+        type: 'string',
+        value: props.lastName,
+        name: 'apellido'
+    })
+
+    this.phone = validator({
+        type: 'string',
+        value: props.phone,
+        name:  'telefono',
+        size: 10
+    })
+
+    this.email = validator({
+        type: 'string',
+        value: props.email,
+        name: 'correo'
+    })   
+    
     return this
 }
 
