@@ -1,40 +1,41 @@
 const Schema = require('mongoose').Schema
 const ObjectId = require('mongoose').Types.ObjectId
 const Model = require('mongoose').model
-const Messages = require('./tasks.messages')
+const Messages = require('./sessions.messages')
 
 const schema = new Schema({
-
-    userId: {
-        type: ObjectId
-    },
 
     user: {
         type: ObjectId,
         ref: 'Users'
     },
 
-    name: {
+    token: {
         type: String
     },
 
-    date: {
+    navegador: {
+        type: String
+    },
+
+    typeSO: {
+        type: String
+    },
+
+    location: {
+        lat: String,
+        lng: String,
+    },
+
+    expired: {
         type: Date
     },
 
-    description: {
-        type: String
+    created: {
+        type: Date,
+        default: Date.now
     },
-    
-    label: {
-        type: [String]
-    },
-    
-    status: {
-        type: Boolean,
-        default: false
-    },
-    
+
     created: {
         type: Date,
         default: Date.now
@@ -42,30 +43,27 @@ const schema = new Schema({
 })
 
 schema.pre('save', function(next) {
-
-    this.user = this.userId
     next()
-
 })
 
 schema.post('save', function(err, doc, next) {
-    if(err) return next(Messages(err).taskSaveError)
+    if(err) return next(Messages(err).sessionSaveError)
     next()
 })
 
 schema.post('remove', function(err, doc, next) {
-    if(err) return next(Messages(err).taskDeleteError)
+    if(err) return next(Messages(err).sessionDeleteError)
     next()
 })
 
 schema.post('findOne', function(err, doc, next) {
-    if(err) return next(Messages(err).taskGetError)
+    if(err) return next(Messages(err).sessionGetError)
     next()
 })
 
 schema.post('find', function(err, doc, next) {
-    if(err) return next(Messages(err).taskGetError)
+    if(err) return next(Messages(err).sessionGetError)
     next()
 })
 
-module.exports = Model('Tasks', schema)
+module.exports = Model('Sessions.', schema)

@@ -40,6 +40,12 @@ module.exports = function(req) {
         name: 'lista de etiquetas'
     })
 
+    this.status = validator ({
+        type: 'boolean',
+        value: props.status,
+        name: 'estado de la tarea'
+    })
+
     return this
 }
 

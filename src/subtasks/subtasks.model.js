@@ -1,40 +1,28 @@
 const Schema = require('mongoose').Schema
 const ObjectId = require('mongoose').Types.ObjectId
 const Model = require('mongoose').model
-const Messages = require('./tasks.messages')
+const Messages = require('./subtasks.messages')
 
 const schema = new Schema({
 
-    userId: {
+    subtaskId: {
         type: ObjectId
     },
 
-    user: {
+    task: {
         type: ObjectId,
-        ref: 'Users'
+        ref: 'Tasks'
     },
-
+    
     name: {
         type: String
     },
 
-    date: {
-        type: Date
-    },
-
-    description: {
-        type: String
-    },
-    
-    label: {
-        type: [String]
-    },
-    
     status: {
         type: Boolean,
         default: false
     },
-    
+
     created: {
         type: Date,
         default: Date.now
@@ -42,29 +30,26 @@ const schema = new Schema({
 })
 
 schema.pre('save', function(next) {
-
-    this.user = this.userId
     next()
-
 })
 
 schema.post('save', function(err, doc, next) {
-    if(err) return next(Messages(err).taskSaveError)
+    if(err) return next(Messages(err).SaveError)
     next()
 })
 
 schema.post('remove', function(err, doc, next) {
-    if(err) return next(Messages(err).taskDeleteError)
+    if(err) return next(Messages(err).DeleteError)
     next()
 })
 
 schema.post('findOne', function(err, doc, next) {
-    if(err) return next(Messages(err).taskGetError)
+    if(err) return next(Messages(err).GetError)
     next()
 })
 
 schema.post('find', function(err, doc, next) {
-    if(err) return next(Messages(err).taskGetError)
+    if(err) return next(Messages(err).GetError)
     next()
 })
 

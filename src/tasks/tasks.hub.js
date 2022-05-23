@@ -5,7 +5,7 @@ module.exports = {
     createTask,
     getTasks,
     getTask,
-    updateTask,
+    updateTask,    
     deleteTask
 }
 
@@ -77,6 +77,7 @@ async function updateTask(req, res) {
             'date',
             'description',
             'label',
+            'status'
         ]
 
         fields.forEach(field => req.body[field] && (data[field] = req.body[field]))
