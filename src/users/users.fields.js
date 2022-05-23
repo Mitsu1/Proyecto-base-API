@@ -1,6 +1,6 @@
 const validator = require('../validator')
 
-const Fields = function(req) {
+module.exports = function(req) {
 
     const props = {...req.headers, ...req.params, ...req.query, ...req.body}
 
@@ -38,4 +38,3 @@ const Fields = function(req) {
     return this
 }
 
-module.exports = Fields

@@ -1,6 +1,5 @@
-const { Tasks } = require('../fields')
 const Service = require('./tasks.service')
-const Methods = require('../methods')
+const Fields = require('./tasks.fields')
 
 module.exports = {
     createTask,
@@ -13,10 +12,14 @@ module.exports = {
 async function createTask(req, res) {
     try {
 
-        const tasks = new Tasks(req)
+        const tasks = new Fields(req)
 
         const data = {
-            
+            userId: req.userId,
+            name: tasks.name.get(),
+            date: tasks.date.get(),
+            description: tasks.description.get(),
+            label: tasks.label.get()
         }
 
         res.$data(await Service.createTask(data))
@@ -29,18 +32,15 @@ async function createTask(req, res) {
 async function getTasks(req, res) {
     try {
 
-        const tasks = new Tasks(req)
-
-        const data = {
-
-        }
+        const tasks = new Fields(req)
 
         const query = {
             page: parseInt(req.query.page || 0),
-            find: req.query.find
+            find: req.query.find,
+            label: req.query.label,
         }
 
-        res.$data(await Service.getTasks(data, query))
+        res.$data(await Service.getTasks(query))
 
     } catch(error) {
         res.$error(error)
@@ -50,7 +50,7 @@ async function getTasks(req, res) {
 async function getTask(req, res) {
     try {
 
-        const tasks = new Tasks(req)
+        const tasks = new Fields(req)
 
         const data = {
             taskId: tasks.taskId.get()
@@ -66,16 +66,20 @@ async function getTask(req, res) {
 async function updateTask(req, res) {
     try {
 
-        const tasks = new Tasks(req)
+        const tasks = new Fields(req)
 
         let data = {
             taskId: tasks.taskId.get()
         }
 
-        const props = [
+        const fields = [
+            'name',
+            'date',
+            'description',
+            'label',
         ]
 
-        data = Methods.updateValidation(data, props, req.body, tasks)
+        fields.forEach(field => req.body[field] && (data[field] = req.body[field]))
 
         res.$data(await Service.updateTask(data.taskId, data))
 
@@ -87,7 +91,7 @@ async function updateTask(req, res) {
 async function deleteTask(req, res) {
     try {
 
-        const tasks = new Tasks(req)
+        const tasks = new Fields(req)
 
         const data = {
             taskId: tasks.taskId.get()

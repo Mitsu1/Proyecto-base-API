@@ -1,6 +1,5 @@
 const Model = require('./users.model')
 const Methods = require('../methods')
-const Messages = require('./users.messages')
 
 module.exports = {
     createUser,
@@ -31,8 +30,7 @@ async function getUsers(query) {
         if(query.find) {
             const regexp = new RegExp(query.find, 'i')
             options.$or = [
-                { firstName: regexp },
-                { lastName: regexp },
+                { name: regexp },
                 { phone: regexp },
                 { email: regexp },
             ]

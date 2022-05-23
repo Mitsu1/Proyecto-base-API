@@ -1,6 +1,5 @@
 const Model = require('./tasks.model')
 const Messages = require('./tasks.messages')
-const Services = require('../services')
 const Methods = require('../methods')
 
 module.exports = {
@@ -25,7 +24,7 @@ async function createTask(data) {
     }
 }
 
-async function getTasks(data, query) {
+async function getTasks(query) {
     try {
 
         const options = {}
@@ -33,14 +32,35 @@ async function getTasks(data, query) {
         const page = query.page
 
         if(query.find) {
+
             const regexp = new RegExp(query.find, 'i')
-            options.$or = []
+
+            options.$or = [
+                {name: regexp},
+                {description: regexp}
+            ]
+
+            const Users = require('../users/users.service')
+            const usersIds = await Users.findUsersId(query.find)
+
+            options.$or.push({
+                userId: {
+                    $in: usersIds
+                }
+            })
+        }
+
+        if(query.label){
+            options.label = {
+                $in: [query.label]
+            }
         }
 
         const tasks = await Model.find(options)
             .skip(page * limit)
             .limit(limit)
             .sort({created: -1})
+            .populate('user')
 
         const total = await Model.countDocuments(options)
 

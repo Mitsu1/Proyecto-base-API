@@ -1,6 +1,6 @@
 const validator = require('../validator')
 
-const Fields = function(req) {
+module.exports = function(req) {
 
     const props = {...req.headers, ...req.params, ...req.query, ...req.body}
 
@@ -10,7 +10,36 @@ const Fields = function(req) {
         name: 'identificador'
     })
 
+    this.userId = validator ({
+        type: 'ObjectId',
+        value: props.userId,
+        name: 'identificador del usuario'
+    })
+
+    this.name = validator ({
+        type: 'string',
+        value: props.name,
+        name: 'nombre del curso'
+    })
+
+    this.date = validator ({
+        type: 'string',
+        value: props.date,
+        name: 'fecha de termino'
+    })
+
+    this.description = validator ({
+        type: 'string',
+        value: props.description,
+        name: 'descripcion'
+    })
+
+    this.label = validator ({
+        type: 'array',
+        value: props.label,
+        name: 'lista de etiquetas'
+    })
+
     return this
 }
 
-module.exports = Fields

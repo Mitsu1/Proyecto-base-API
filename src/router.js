@@ -9,9 +9,8 @@ Router.get('/', async(req, res) => {
     })
 })
 
-const UsersRouter = require('./users/users.router')
-
 module.exports = [
     Router,
-    UsersRouter
+    require('./users/users.router'),
+    require('./tasks/tasks.router')
 ]
