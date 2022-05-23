@@ -10,7 +10,7 @@ module.exports = function($details, $message) {
 
         userSaveError: {
             code: 503,
-            key: 'userGetError',
+            key: 'userSaveError',
             message: $message || 'Error al guardar la información del usuario',
             $details
         },

@@ -11,7 +11,7 @@ async function notFound(req, res) {
     
 }
 
-async function serverError(error, req, res, next){
+async function serverError(req, res, next){
     
     res.$error(Messages().serverError)
     
