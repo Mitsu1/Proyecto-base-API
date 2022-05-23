@@ -19,14 +19,14 @@ const schema = new Schema({
     },
 
     date: {
-        type: String
+        type: Date
     },
 
     description: {
         type: String
     },
     
-    status: {
+    label: {
         type: [String]
     },
 

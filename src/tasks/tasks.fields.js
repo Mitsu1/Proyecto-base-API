@@ -23,7 +23,7 @@ module.exports = function(req) {
     })
 
     this.date = validator ({
-        type: 'string',
+        type: 'date',
         value: props.date,
         name: 'fecha de termino'
     })
