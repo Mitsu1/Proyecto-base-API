@@ -2,10 +2,28 @@ const Service = require('./users.service')
 const Fields = require('./users.fields')
 
 module.exports = {
+    loginUser,
     createUser,
     getUsers,
     updateUser,
     deleteUser,
+}
+
+async function loginUser(req, res) {
+    try {
+              
+        const fields = new Fields(req) 
+        
+        const data = {
+            email: fields.email.get(),
+            password: fields.password.get(),
+        }
+
+        res.$data(await Service.loginUser(data))
+
+    } catch (error) {
+        res.$error(error)
+    }
 }
 
 async function createUser(req, res) {
@@ -17,6 +35,7 @@ async function createUser(req, res) {
             firstName: fields.firstName.get(),
             lastName: fields.lastName.get(),
             email: fields.email.get(),
+            password: fields.password.get(),
             phone: fields.phone.get(),
         }
 
@@ -54,6 +73,7 @@ async function updateUser(req, res) {
             'firstName',
             'lastName',
             'phone',
+            'created',
         ]
 
         fields.forEach(field => req.body[field] && (data[field] = req.body[field]))

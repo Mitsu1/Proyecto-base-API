@@ -5,7 +5,7 @@ const Messages = require('./subtasks.messages')
 
 const schema = new Schema({
 
-    subtaskId: {
+    taskId: {
         type: ObjectId
     },
 
@@ -53,4 +53,4 @@ schema.post('find', function(err, doc, next) {
     next()
 })
 
-module.exports = Model('Tasks', schema)
+module.exports = Model('Subtasks', schema)

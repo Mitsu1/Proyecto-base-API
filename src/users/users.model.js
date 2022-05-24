@@ -1,7 +1,8 @@
-const Model = require('mongoose').model
 const Schema = require('mongoose').Schema
+const Model = require('mongoose').model
 const ObjectId = require('mongoose').Types.ObjectId
 const Messages = require('./users.messages')
+const Encrypt = require('../encrypt')
 
 const schema = new Schema ({
     
@@ -27,6 +28,11 @@ const schema = new Schema ({
         type: String
     },
 
+    password: {
+        type: String,
+        select: false
+    },
+    
     phone: {
         type: String
     },
@@ -43,8 +49,13 @@ const schema = new Schema ({
 })
 
 schema.pre('save', function(next) {    
+
     this.name = `${ this.firstName } ${ this.lastName}`
     this.updated = new Date()
+
+    if(this.password)
+        this.password = Encrypt.bcryptHash(this.password)
+
     next()
 })
 

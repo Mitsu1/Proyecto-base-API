@@ -643,4 +643,14 @@
 			"module.exports = Model('$1', schema)"
 		]
 	},
+
+	"log json": {
+		"scope": "javascript, typescript",
+		"prefix": "log json",
+		"body": [
+			"console.log(JSON.stringify($1, null, 4))$0"
+		],
+		"description": "Log output to console"
+
+	}
 }

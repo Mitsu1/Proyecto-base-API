@@ -1,5 +1,5 @@
-const Fields = require('./sessions.fields')
 const Service = require('./sessions.service')
+const Fields = require('./sessions.fields')
 
 module.exports = {
     getSessions,
@@ -24,7 +24,7 @@ async function getSessions(req, res) {
 async function getSession(req, res) {
     try {
 
-        const sessions = new Sessions(req)
+        const sessions = new Fields(req)
 
         const data = {
             sessionId: sessions.sessionId.get()

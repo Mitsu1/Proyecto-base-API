@@ -1,17 +1,53 @@
 const Model = require('./users.model')
-const Methods = require('../methods')
+const Messages = require('./users.messages')
+const Services = require('../services')
+const Encrypt = require('../encrypt')
+const Moment = require('moment')
 
 module.exports = {
+    loginUser,
     createUser,
     getUsers,
     updateUser,
-    deleteUser
+    deleteUser,
+    findUsersId,
+    Model,
+    Messages
+}
+
+async function loginUser(data) {
+    try {
+
+        const user = await Model.findOne({email: data.email})
+
+        if(!user)
+            throw Messages(data.email).userNotFound
+        
+        if(!Encrypt.bcryptCompare(data.password, user.password))
+            throw Messages(data.password).userPasswordError
+
+        const sessionData = {
+            userId: user._id,
+            token: Encrypt.cryptrString( user._id ),
+            expired: Moment().add(15, 'days').toDate()
+        }
+
+        const session = await Services.Sessions.createSession(sessionData)
+
+        return {
+            teacher,
+            session
+        }
+        
+    } catch (error) {
+        throw error
+    }
 }
 
 async function createUser(data) {
     try {
 
-        const user = new Model(data)
+        const user = new Model(data)       
         
         return user.save()
 
@@ -24,8 +60,8 @@ async function getUsers(query) {
     try {
 
         const options = {}
+        const limit = 100
         const page = query.page
-        const limit = 3
 
         if(query.find) {
             const regexp = new RegExp(query.find, 'i')
@@ -76,7 +112,6 @@ async function updateUser(userId, data) {
     try {
 
         const user = await getUser(userId)   
-
         const fields = Object.keys(data)
 
         fields.forEach(field => user[field] = data[field])
@@ -97,6 +132,26 @@ async function deleteUser(userId) {
         return user
 
     } catch (error) {
+        throw error
+    }
+}
+
+async function findUsersId(value) {
+    try {
+
+        const regexp = new RegExp(value, 'i')
+        const options = {
+            $or: [
+                {name: regexp}
+            ]
+        }
+
+        const users = await Model.find(options)
+            .select({_id: true})
+
+        return users.map(user => user._id)
+
+    } catch(error) {
         throw error
     }
 }

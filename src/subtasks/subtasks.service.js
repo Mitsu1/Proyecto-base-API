@@ -1,6 +1,5 @@
 const Model = require('./subtasks.model')
 const Messages = require('./subtasks.messages')
-const Services = require('../services')
 const Methods = require('../methods')
 
 module.exports = {
@@ -16,10 +15,10 @@ module.exports = {
 async function createSubtask(data) {
     try {
 
-        const subtask = new Model(data)
+        const subtask = new Model(data)    
 
         return await subtask.save()
-
+        
     } catch(error) {
         throw error
     }
@@ -33,14 +32,25 @@ async function getSubtasks(data, query) {
         const page = query.page
 
         if(query.find) {
+
             const regexp = new RegExp(query.find, 'i')
-            options.$or = []
+
+            options.$or = [
+                {name: regexp}
+            ]
+        }
+        
+        if(query.label){
+            options.label = {
+                $in: [query.label]
+            }
         }
 
         const subtasks = await Model.find(options)
             .skip(page * limit)
             .limit(limit)
             .sort({created: -1})
+            .populate('task')
 
         const total = await Model.countDocuments(options)
 

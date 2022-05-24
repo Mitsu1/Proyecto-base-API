@@ -27,6 +27,13 @@ module.exports = function($details, $message) {
             key: 'userNotFound',
             message: $message || 'El usuario no fue encontrado',
             $details
-        }
+        },
+
+        userPasswordError: {
+            code: 400,
+            key: 'userPasswordError',
+            message: $message || 'Contraseña incorrecta',
+            $details
+        },
     }
 }

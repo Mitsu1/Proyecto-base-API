@@ -1,5 +1,5 @@
-const { Subtasks } = require('../subtasks.fields')
 const Service = require('./subtasks.service')
+const Fields = require('./subtasks.fields')
 
 module.exports = {
     createSubtask,
@@ -16,7 +16,7 @@ async function createSubtask(req, res) {
 
         const data = {
             taskId: req.taskId,
-            name: subtasks.name.get(),
+            name: subtasks.name.get()
         }
 
         res.$data(await Service.createSubtask(data))

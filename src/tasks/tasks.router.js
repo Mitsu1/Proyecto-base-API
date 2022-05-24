@@ -1,6 +1,5 @@
 const Router = require('express').Router()
 const Hub = require('./tasks.hub')
-const Middlewares = require('../middlewares')
 
 Router.post('/tasks', Hub.createTask)
 

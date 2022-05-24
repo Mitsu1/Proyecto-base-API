@@ -10,6 +10,24 @@ module.exports = function(req) {
         name: 'identificador'
     })
 
+    this.taskId = validator({
+        type: 'objectId',
+        value: props.taskId,
+        name: 'identificador'
+    })
+
+    this.name = validator ({
+        type: 'string',
+        value: props.name,
+        name: 'nombre del curso'
+    })
+    
+    this.status = validator ({
+        type: 'boolean',
+        value: props.status,
+        name: 'estado de la tarea'
+    })
+
     return this
 }
 

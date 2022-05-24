@@ -4,12 +4,6 @@ module.exports = function(req) {
 
     const props = {...req.headers, ...req.params, ...req.query, ...req.body}
 
-    this.userId = validator({
-        type: 'objectId',
-        value: props.userId,
-        name: 'identificador'
-    })
-
     this.firstName = validator({
         type: 'string',
         value: props.firstName,
@@ -34,6 +28,12 @@ module.exports = function(req) {
         value: props.email,
         name: 'correo'
     })   
+
+    this.password = validator({
+        type: 'string',
+        value: props.password,
+        name: 'contraseña'
+    })
     
     return this
 }

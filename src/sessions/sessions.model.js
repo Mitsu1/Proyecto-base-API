@@ -5,6 +5,10 @@ const Messages = require('./sessions.messages')
 
 const schema = new Schema({
 
+    userId: {
+        type: ObjectId
+    },
+
     user: {
         type: ObjectId,
         ref: 'Users'
@@ -29,11 +33,6 @@ const schema = new Schema({
 
     expired: {
         type: Date
-    },
-
-    created: {
-        type: Date,
-        default: Date.now
     },
 
     created: {

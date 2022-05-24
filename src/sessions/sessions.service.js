@@ -24,7 +24,7 @@ async function createSession(data) {
     }
 }
 
-async function getSessions(data, query) {
+async function getSessions(query) {
     try {
 
         const options = {}
