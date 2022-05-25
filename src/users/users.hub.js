@@ -55,6 +55,8 @@ async function getUsers(req, res) {
             status: req.query.status
         }
 
+        console.log(query)
+
         res.$data(await Service.getUsers(query))
         
     } catch (error) {

@@ -35,7 +35,7 @@ async function loginUser(data) {
         const session = await Services.Sessions.createSession(sessionData)
 
         return {
-            teacher,
+            user,
             session
         }
         

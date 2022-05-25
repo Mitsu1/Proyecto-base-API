@@ -65,4 +65,4 @@ schema.post('find', function(err, doc, next) {
     next()
 })
 
-module.exports = Model('Sessions.', schema)
+module.exports = Model('Sessions', schema)

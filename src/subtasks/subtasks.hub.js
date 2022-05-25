@@ -15,7 +15,7 @@ async function createSubtask(req, res) {
         const subtasks = new Fields(req)
 
         const data = {
-            taskId: req.taskId,
+            taskId: subtasks.taskId.get(),
             name: subtasks.name.get()
         }
 
@@ -35,8 +35,9 @@ async function getSubtasks(req, res) {
             page: parseInt(req.query.page || 0),
             find: req.query.find,
             label: req.query.label,
+            taskId: req.query.taskId
         }
-
+        console.log(query)
         res.$data(await Service.getSubtasks(query))
 
     } catch(error) {

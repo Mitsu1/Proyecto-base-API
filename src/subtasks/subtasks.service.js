@@ -24,7 +24,7 @@ async function createSubtask(data) {
     }
 }
 
-async function getSubtasks(data, query) {
+async function getSubtasks(query) {
     try {
 
         const options = {}
@@ -45,6 +45,9 @@ async function getSubtasks(data, query) {
                 $in: [query.label]
             }
         }
+
+        if(query.taskId)
+            options.taskId = query.taskId
 
         const subtasks = await Model.find(options)
             .skip(page * limit)

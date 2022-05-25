@@ -1,7 +1,7 @@
-const Cors = require('cors')
-const Morgan = require('morgan')
 const Express = require('express')
 const Compression = require('compression')
+const Morgan = require('morgan')
+const Cors = require('cors')
 
 const Router = require('./src/router')
 const Config = require('./src/config')

@@ -3,7 +3,7 @@ const Fields = require('./sessions.fields')
 
 module.exports = {
     getSessions,
-    getSession,
+    getSession
 }
 
 async function getSessions(req, res) {
