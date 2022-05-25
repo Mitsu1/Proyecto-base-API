@@ -38,8 +38,7 @@ async function getTasks(query) {
             options.$or = [
                 {name: regexp},
                 {description: regexp}
-            ]
-            
+            ]            
         }
 
         if(query.label){

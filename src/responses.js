@@ -1,6 +1,6 @@
 module.exports = {    
     $data,
-    $error    
+    $error
 }
 
 async function $data(data, res) {
