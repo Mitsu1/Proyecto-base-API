@@ -2,6 +2,7 @@ const Model = require('./users.model')
 const Messages = require('./users.messages')
 const Services = require('../services')
 const Encrypt = require('../encrypt')
+const Methods = require('../methods')
 const Moment = require('moment')
 
 module.exports = {
@@ -18,7 +19,7 @@ module.exports = {
 async function loginUser(data) {
     try {
 
-        const user = await Model.findOne({email: data.email})
+        const user = await Model.findOne({email: data.email}, '+password')
 
         if(!user)
             throw Messages(data.email).userNotFound
@@ -60,8 +61,8 @@ async function getUsers(query) {
     try {
 
         const options = {}
-        const limit = 100
         const page = query.page
+        const limit = 3
 
         if(query.find) {
             const regexp = new RegExp(query.find, 'i')
@@ -70,15 +71,14 @@ async function getUsers(query) {
                 { phone: regexp },
                 { email: regexp },
             ]
-        }
-
-        if(query.status)
-            options.status = query.status
+        }       
 
         const users = await Model.find(options)
             .skip(limit * page)
             .limit(limit)
             .sort({created: -1})
+
+            console.log(users)
 
         const total = await Model.countDocuments(options)
                 

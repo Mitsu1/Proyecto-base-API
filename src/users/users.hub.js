@@ -52,7 +52,6 @@ async function getUsers(req, res) {
         const query = {
             page: parseInt(req.query.page || 0),
             find: req.query.find,
-            status: req.query.status
         }
 
         console.log(query)
