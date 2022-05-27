@@ -20,7 +20,7 @@ App.use(Express.json())
 App.use((req, res, next) => {
 
     res.$data = data => Responses.$data(data, res)
-    res.$error = error => Responses.$data(error, res)
+    res.$error = error => Responses.$error(error, res)
     next()
 
 })

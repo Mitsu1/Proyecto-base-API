@@ -5,7 +5,7 @@ module.exports = {
 
 async function $data(data, res) {
     res.status(200).send({
-        success:true,
+        success: true,
         data
     })
 }
