@@ -37,7 +37,9 @@ module.exports = function(req) {
     this.label = validator ({
         type: 'array',
         value: props.label,
-        name: 'lista de etiquetas'
+        name: 'lista de etiquetas',
+        required: false
+
     })
 
     this.status = validator ({
