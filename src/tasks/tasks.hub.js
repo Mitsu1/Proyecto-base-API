@@ -1,12 +1,14 @@
 const Service = require('./tasks.service')
 const Fields = require('./tasks.fields')
+const { aggregate } = require('./tasks.model')
 
 module.exports = {
     createTask,
     getTasks,
     getTask,
     updateTask,    
-    deleteTask
+    deleteTask,
+    getTaskResume
 }
 
 async function createTask(req, res) {
@@ -80,7 +82,7 @@ async function updateTask(req, res) {
             'status'
         ]
 
-        fields.forEach(field => req.body[field] && (data[field] = req.body[field]))
+        fields.forEach(field => req.body[field] != undefined && (data[field] = req.body[field]))
 
         res.$data(await Service.updateTask(data.taskId, data))
 
@@ -104,3 +106,14 @@ async function deleteTask(req, res) {
         res.$error(error)
     }
 }
+
+async function getTaskResume(req, res) {
+    try {
+
+        
+
+    } catch(error) {
+        res.$error(error)
+    }
+}
+

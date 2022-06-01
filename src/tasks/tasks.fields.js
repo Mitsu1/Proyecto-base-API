@@ -19,7 +19,7 @@ module.exports = function(req) {
     this.name = validator ({
         type: 'string',
         value: props.name,
-        name: 'nombre del curso'
+        name: 'nombre de la tarea'
     })
 
     this.date = validator ({
@@ -46,6 +46,18 @@ module.exports = function(req) {
         type: 'boolean',
         value: props.status,
         name: 'estado de la tarea'
+    })
+    
+    this.completado = validator ({
+        type: 'number',
+        value: props.total,
+        name: 'total de las tareas completadas'
+    })
+
+    this.pendiente = validator ({
+        type: 'number',
+        value: props.pendiente,
+        name: 'total de las tareas pendientes'
     })
 
     return this

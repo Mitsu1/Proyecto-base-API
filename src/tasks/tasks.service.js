@@ -8,6 +8,7 @@ module.exports = {
     getTask,
     updateTask,
     deleteTask,
+    getTaskResume,
     Model,
     Messages
 }
@@ -104,6 +105,30 @@ async function deleteTask(taskId) {
         await Model.deleteOne({_id: taskId})
 
         return taskId
+
+    } catch(error) {
+        throw error
+    }
+}
+
+async function getTaskResume() {
+    try {
+
+        return await Model.agregate([
+            {
+                $match:{
+                    userId:req.query.userId
+                }
+            },
+            {
+                $group:{
+                    _id:'$status',
+                    total:{
+                        $sum:1
+                    }
+                }
+            }
+        ])
 
     } catch(error) {
         throw error

@@ -4,6 +4,8 @@ const Middlewares = require('../middlewares')
 
 Router.post('/tasks', Middlewares.auth, Hub.createTask)
 
+Router.get('/tasks/task.resume', Middlewares.auth, Hub.getTaskResume)
+
 Router.get('/tasks', Middlewares.auth, Hub.getTasks)
 
 Router.get('/tasks/:taskId', Middlewares.auth, Hub.getTask)

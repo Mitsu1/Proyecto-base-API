@@ -19,13 +19,13 @@ module.exports = function(req) {
     this.name = validator ({
         type: 'string',
         value: props.name,
-        name: 'nombre del curso'
+        name: 'nombre de la subtarea'
     })
     
     this.status = validator ({
         type: 'boolean',
         value: props.status,
-        name: 'estado de la tarea'
+        name: 'estado de la subtarea'
     })
 
     return this
