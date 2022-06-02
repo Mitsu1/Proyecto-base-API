@@ -47,18 +47,6 @@ module.exports = function(req) {
         value: props.status,
         name: 'estado de la tarea'
     })
-    
-    this.completado = validator ({
-        type: 'number',
-        value: props.total,
-        name: 'total de las tareas completadas'
-    })
-
-    this.pendiente = validator ({
-        type: 'number',
-        value: props.pendiente,
-        name: 'total de las tareas pendientes'
-    })
 
     return this
 }

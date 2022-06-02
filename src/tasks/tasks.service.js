@@ -111,13 +111,13 @@ async function deleteTask(taskId) {
     }
 }
 
-async function getTaskResume() {
+async function getTaskResume(query) {
     try {
-
-        return await Model.agregate([
+        
+        return await Model.aggregate([
             {
                 $match:{
-                    userId:req.query.userId
+                    userId:query.userId
                 }
             },
             {

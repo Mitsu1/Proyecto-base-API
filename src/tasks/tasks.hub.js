@@ -110,7 +110,11 @@ async function deleteTask(req, res) {
 async function getTaskResume(req, res) {
     try {
 
-        
+        let data = {
+            userId: req.userId
+        }
+
+        res.$data(await Service.getTaskResume(data))
 
     } catch(error) {
         res.$error(error)
